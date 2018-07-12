@@ -31,8 +31,6 @@
 	//font-family: 'RobotoCondensed';
 	//src: url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 //}
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/css?family=Muli');
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 //@import url('https://fonts.googleapis.com/css?family=Neuton+Bold');
@@ -43,55 +41,18 @@
 // 1. Global
 // ---------
 
-$assets-url: '//shareyourroad-com.s3.amazonaws.com/assets/';
-
-$turquoise: #00afb5;
-$roadtrip-green: #50d337;
-$roadtrip-green-light: #7fff67;
-$roadtrip-green-very-light: #a9fe99;
-
 // grayscale
 $black: #000;
 $dark-gray: #3a3a3a;
 $gray: #797979;
-$light-gray: #979797;
-$very-light-gray: #ccc;
-$very-very-light-gray: #eee;
 $white: #fff;
-$off-white: #fefefe;
-$gray-translucent: rgba(121, 121, 121, .5);
-$white-translucent: rgba(255, 255, 255, .4);
 
 $default-bg-color: #fefefe;
-$roadtrip-blue: #366dd1;
 
 $alert-red: #e2482b;
 $status-red: #e2482b;
 $status-warning: #f5af42;
 $status-success: #50d337;
-
-$button-padding: .65rem 1.8rem;
-$button-border-radius: .2rem;
-
-$roadmap-foundation: rgba(243, 147, 127, .8);
-$roadmap-interest-1: rgba(120, 189, 228, .8);
-$roadmap-interest-2: rgba(237, 226, 129, .8);
-
-$csv-green: #5ee76c;
-
-$approve-green: #4cb625;
-$reject-orange: #ef5500;
-$pending-yellow: #cfc139;
-
-$author-blue: #0e398e;
-$author-blue-selected: #5b7da8;
-
-$profile-image-small: 50px;
-$profile-image-medium: 70px;
-$profile-image-large: 100px;
-
-
-
 
 // 2. Typography
 // -------------

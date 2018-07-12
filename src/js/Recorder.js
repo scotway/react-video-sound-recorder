@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 class Recorder extends Component {
   constructor(props) {
@@ -15,11 +14,6 @@ class Recorder extends Component {
     this.audioCtx = new (window.AudioContext || webkitAudioContext)();
     this.canvasCtx = false;
     this.chunks = [];
-
-    // this.recordRef = null;
-    // this.setRecordRef = (el) => {
-    // this.recordRef = el;
-    // };
   }
 
   componentDidMount() {
@@ -150,6 +144,7 @@ class Recorder extends Component {
   render() {
     return (
       <section ref="main" className={this.props.className}>
+        <video ref="video" src="" />
         <canvas ref="canvas" className="visualizer" height="60px" />
         <div id="buttons">
           <button
