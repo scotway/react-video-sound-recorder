@@ -107,7 +107,7 @@ button {
 	}
 
 	&:focus {
-		background-color: $roadtrip-blue;
+		background-color: $dark-gray;
 	}
 
 	&:hover {
@@ -269,7 +269,7 @@ button {
 	margin: 30px auto;
 	width: 80%;
 	height: 25px;
-	background-color: $very-light-gray;
+	background-color: $gray;
 }
 
 .ghosted {
