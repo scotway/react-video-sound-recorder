@@ -1,0 +1,16 @@
+{
+	"restartable": "r",
+	"ignore": [
+		"client/",
+		"node_modules/"
+	],
+	"verbose": true,
+	"watch": [
+		"./server",
+		"./views"
+	],
+	"env":{
+		"PORT":"3010"
+	},
+	"ext": "js json"
+}
