@@ -10,7 +10,7 @@ const App = () => (
       <header className="cell medium-10 large-8">
         <h1>Audio Recorder</h1>
       </header>
-      <Recorder className="cell medium-10 large-8" />
+      <Recorder className="recorder cell medium-10 large-8" />
     </div>
   </div>
 );

@@ -115,9 +115,9 @@ class Recorder extends Component {
 
   toggleRecord() {
     if (this.state.isRecording) {
-      this.stopRecord();
+      this.mediaRecorder.start();
     } else {
-      this.startRecord();
+      this.mediaRecorder.stop();
     }
 
     this.setState({
@@ -125,23 +125,10 @@ class Recorder extends Component {
     });
   }
 
-  startRecord() {
-    if (this.state.isSupported) {
-      this.mediaRecorder.start();
-      this.refs.record.style.background = 'red';
-    }
-  }
-
-  stopRecord() {
-    if (this.state.isSupported) {
-      this.mediaRecorder.stop();
-      this.refs.record.style.background = '';
-      this.refs.record.style.color = '';
-      // mediaRecorder.requestData();
-    }
-  }
-
   render() {
+    const buttonClasses = this.state.isRecording ?
+      'record-button record-button--on' : 'record-button';
+
     return (
       <section ref="main" className={this.props.className}>
         <video ref="video" src="" />
@@ -149,7 +136,7 @@ class Recorder extends Component {
         <div id="buttons">
           <button
             ref="record"
-            className="record"
+            className={buttonClasses}
             onClick={() => {
               this.toggleRecord();
             }}

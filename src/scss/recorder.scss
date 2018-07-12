@@ -1,0 +1,12 @@
+.recorder {
+  .video {
+  }
+
+  .record-button {
+    background-color: $button;
+
+    &--on {
+      background-color: $alert-red;
+    }
+  }
+}
