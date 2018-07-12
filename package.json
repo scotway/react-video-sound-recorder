@@ -1,5 +1,5 @@
 {
-  "name": "react-rest-admin",
+  "name": "react-video-sound-recorder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,6 +19,7 @@
     "express": "^4.16.2",
     "foundation-sites": "^6.4.4-rc1",
     "hbs": "^4.0.1",
+    "hoek": "^5.0.3",
     "lodash": "^4.17.10",
     "moment": "^2.20.1",
     "prop-types": "^15.6.2",
