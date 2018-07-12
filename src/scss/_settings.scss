@@ -1,0 +1,121 @@
+//taco-bell fonts
+@font-face {
+	font-family: 'Brandon';
+	src: url('/fonts/Brandon_reg.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Brandon';
+	src: url('/fonts/Brandon_bld.otf') format('opentype');
+	font-weight: bold;
+	font-style: bold;
+}
+
+@font-face {
+	font-family: 'Brandon';
+	src: url('/fonts/Brandon_bld_it.otf') format('opentype');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Franchise';
+	src: url('/fonts/Franchise-Bold.otf') format('opentype');
+	font-weight: bold;
+}
+//taco-bell fonts
+//generic fonts
+//@font-face {
+	//font-family: 'RobotoCondensed';
+	//src: url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+//}
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Muli');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+//@import url('https://fonts.googleapis.com/css?family=Neuton+Bold');
+@import url('https://fonts.googleapis.com/css?family=Neuton');
+//@import url('https://fonts.googleapis.com/css?family=Neuton+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Merriweather');
+// 1. Global
+// ---------
+
+$assets-url: '//shareyourroad-com.s3.amazonaws.com/assets/';
+
+$turquoise: #00afb5;
+$roadtrip-green: #50d337;
+$roadtrip-green-light: #7fff67;
+$roadtrip-green-very-light: #a9fe99;
+
+// grayscale
+$black: #000;
+$dark-gray: #3a3a3a;
+$gray: #797979;
+$light-gray: #979797;
+$very-light-gray: #ccc;
+$very-very-light-gray: #eee;
+$white: #fff;
+$off-white: #fefefe;
+$gray-translucent: rgba(121, 121, 121, .5);
+$white-translucent: rgba(255, 255, 255, .4);
+
+$default-bg-color: #fefefe;
+$roadtrip-blue: #366dd1;
+
+$alert-red: #e2482b;
+$status-red: #e2482b;
+$status-warning: #f5af42;
+$status-success: #50d337;
+
+$button-padding: .65rem 1.8rem;
+$button-border-radius: .2rem;
+
+$roadmap-foundation: rgba(243, 147, 127, .8);
+$roadmap-interest-1: rgba(120, 189, 228, .8);
+$roadmap-interest-2: rgba(237, 226, 129, .8);
+
+$csv-green: #5ee76c;
+
+$approve-green: #4cb625;
+$reject-orange: #ef5500;
+$pending-yellow: #cfc139;
+
+$author-blue: #0e398e;
+$author-blue-selected: #5b7da8;
+
+$profile-image-small: 50px;
+$profile-image-medium: 70px;
+$profile-image-large: 100px;
+
+
+
+
+// 2. Typography
+// -------------
+$masthead-font: 'Franchise', sans-serif;
+$default-font: 'Brandon', sans-serif;
+$heading-font: 'Oswald', sans-serif;
+$alt-font: 'Oswald', serif;
+$form-label-size-default: 1.25rem;
+$form-label-size-mobile: 1.5rem;
+
+
+// 3. Shadows
+// --------------
+$default-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+$box-shadow-no-bottom:  0 2px 2px 0 rgba(0,0,0,0.14), 0 -2px 5px 0 rgba(0,0,0,0.12), 0 -2px 1px -2px rgba(0,0,0,0.2);
+$box-shadow-no-top:  0 2px 2px 0 rgba(0,0,0,0.14), 0 2px 5px 0 rgba(0,0,0,0.12), 0 2px 1px -2px rgba(0,0,0,0.2);
+
+
+// 4. Breakpoints
+// --------------
+$medium: "(min-width: 768px)";
+$large: "(min-width: 1024px)";
+$xlarge: "(min-width: 1201px)";
+$xxlarge: "(min-width: 1441px)";
+
+// 5. Style defaults
+$default-image-bg: linear-gradient(305.41deg, #333 0%, #999 52.04%, #ccc 100%);

@@ -1,0 +1,284 @@
+html {
+	// for fixed footer
+	height: 100%;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+// for fixed footer
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	// for fixed footer
+	position: relative;
+	margin: 0;
+	padding-bottom: 23rem;
+	min-height: 100%;
+	height: auto;
+
+	font-family: $default-font;
+
+	@include breakpoint(medium up) {
+		padding-bottom: 20rem;
+	}
+}
+
+a {
+	color: $dark-gray;
+	text-decoration: underline;
+}
+
+p {
+	line-height: 1.875rem;
+	font-size: 1.125rem;
+}
+
+
+iframe {
+	border: 0;
+}
+// ELEMENTS
+.relative-wrapper {
+	position: relative;
+}
+
+.call-to-action {
+	display: inline-block;
+	font-family: $heading-font;
+	font-weight: bold;
+	color: $dark-gray;
+	font-size: 1.125rem;
+	text-decoration: none;
+
+	&--life-route {
+
+		position: absolute;
+		bottom: 1%;
+		display: block;
+		width: 87%;
+		height: 35px;
+		text-align: center;
+	}
+
+	&:hover {
+		color: $gray;
+	}
+
+	&::after {
+		margin-left: 9px;
+		font-family: 'FontAwesome';
+		font-size: 1.1em;
+
+		vertical-align: top;
+		content: '\F0DA';
+	}
+
+	&__caret {
+		margin-left: 10px;
+		font-size: 1.5rem;
+		vertical-align: middle;
+	}
+}
+
+.button,
+button {
+	display: inline-block;
+	padding: 10px 15px;
+	width: 100%;
+	font-size: 1rem;
+	font-family: 'Oswald';
+	font-weight: bold;
+	background-color: $dark-gray;
+	color: $white;
+	text-decoration: none;
+	border-radius: 3px;
+	cursor: pointer;
+
+	&--inline {
+		width: auto;
+	}
+
+	&--wide {
+		padding: 15px 60px;
+	}
+
+	&:focus {
+		background-color: $roadtrip-blue;
+	}
+
+	&:hover {
+		background-color: $gray; // TODO: BETTER HOVER COLOR
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 10px 0 rgba(0,0,0,0.15);
+		text-decoration: none;
+	}
+}
+
+
+// TYPOGRAPHY
+.alt-text-color {
+	color: $white;
+}
+.alt-font {
+	font-family: $alt-font;
+}
+
+// CARD STYLES
+.card {
+	margin: 10px 5px;
+	padding: 20px;
+	box-shadow: $default-box-shadow;
+	border-radius: 3px;
+	background-color: $white;
+
+	&--carousel {
+		margin: auto;
+	}
+}
+
+.card-top {
+	margin: 10px 5px 0;
+	padding: 20px;
+	box-shadow: $box-shadow-no-bottom;
+	border-radius: 3px 3px 0 0;
+	background-color: $white;
+}
+
+.card-bottom {
+	margin: 0 5px 10px;
+	padding: 20px;
+	box-shadow: $box-shadow-no-top;
+	border-radius: 0 0 3px 3px;
+	background-color: $white;
+}
+
+
+.footer {
+	// for fixed footer
+	position: absolute;
+	left: 0;
+	right: 0;
+	//bottom: -23rem;
+	bottom: 0;
+	padding: 20px 0;
+	height: 23rem;
+	text-align: center;
+	background-color: $black;
+	color: $white;
+
+	@include breakpoint(medium up) {
+		height: 20rem;
+	}
+	
+	&__alt-heading {
+		color: $white;
+	}
+
+	&__logo {
+		padding: 10px 0;
+		width: 105px;
+	}
+	&__legal {
+		margin: auto;
+		list-style-type: none;
+
+		&__item {
+			display: inline-block;
+			padding: 0 10px;
+			text-align: center;
+
+			&__link {
+				color: $white;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+// UTILITY CLASSES
+.view-spacer {
+	padding: 10px 0;
+
+	&--margin {
+		padding: 0;
+		margin: 30px 0;
+	}
+
+	@include breakpoint(medium up) {
+		padding: 30px 0;
+	}
+}
+
+.image-spacer {
+	margin: 20px 0;
+}
+
+.spacer-top-bottom {
+	margin: 40px 0;
+}
+
+.separator-top {
+	padding-top: 2rem;
+	border-top: solid 1px $dark-gray;
+}
+
+.pagination {
+
+	margin: auto;
+	text-align: center;
+
+	.current {
+		font-size: 1.125rem;
+	}
+	a {
+		font-size: 1.125rem;
+		text-decoration: none;
+	}
+}
+
+.status-message {
+	display: inline-block;
+	margin: 20px 0;
+	padding: 10px;
+	width: 100%;
+	text-align: center;
+	font-size: 1.125rem;
+	font-weight: bold;
+	color: $white;
+
+	&--success {
+		background-color: $status-success;
+	}
+
+	&--error {
+		background-color: $alert-red;
+	}
+}
+
+.rtn-tooltip {
+	width: 17rem;
+	font-size: 1rem !important;
+}
+
+// CONTENT PLACEHOLDERS
+.content-placeholder {
+	display: block;
+	margin: 30px auto;
+	width: 80%;
+	height: 25px;
+	background-color: $very-light-gray;
+}
+
+.ghosted {
+	color: $gray;
+}
+
+.edit-profile {
+	width: 100%;
+	font-size: 1.25rem;
+	text-align: right;
+	color: $gray;
+}

@@ -1,0 +1,11 @@
+.white-text, .white-text::before {
+	color: $white !important;
+}
+
+.gray-text, .gray-text::before {
+	color: $dark-gray !important;
+}
+
+.black-text, .black-text::before {
+	color: $black !important;
+}

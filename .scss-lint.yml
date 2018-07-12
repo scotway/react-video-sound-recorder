@@ -1,0 +1,62 @@
+scss_files: '/client/src/scss/**/*.css.scss'
+scss_files: '/client/src/react/**/*.scss'
+
+linters:
+    BorderZero:
+        enabled: false
+
+    Indentation:
+        severity: warning
+        width: 1
+        character: tab
+
+    PropertySortOrder:
+        severity: error
+        order:
+            - position
+            - left
+            - top
+            - right
+            - bottom
+            - display
+            - margin
+            - margin-top
+            - margin-right
+            - margin-bottom
+            - margin-left
+            - padding
+            - padding-top
+            - padding-right
+            - padding-bottom
+            - padding-left
+            - border
+            - border-top
+            - border-right
+            - border-bottom
+            - border-left
+            - width
+            - min-height
+            - height
+            - line-height
+            - text-align
+            - text-transform
+            - font
+            - font-family
+            - font-size
+            - font-weight
+            - font-style
+            - background
+            - background-color
+            - background-image
+            - color
+            - z-index
+
+    QualifyingElement:
+        enabled: false
+
+    ImportantRule:
+        enabled: false
+
+    SelectorFormat:
+        severity: warning
+        convention: strict_BEM
