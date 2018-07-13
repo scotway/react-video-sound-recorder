@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 class Recorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
       streams: [],
+      videoUrl: '',
+      countdown: 0,
+      audioName: '',
       isSupported: false,
       isRecording: false,
+      isVideoLoaded: false,
     };
+
+    this.countdownSteps = [
+      'Record',
+      'Ready',
+      'Start',
+      'GO!',
+      'Stop',
+      'Stop',
+    ];
+
+    this.recInt = false;
 
     this.mediaRecorder = false;
     this.audioCtx = new (window.AudioContext || webkitAudioContext)();
@@ -44,16 +60,22 @@ class Recorder extends Component {
     this.mediaRecorder = new MediaRecorder(stream);
     this.visualizeStream(stream);
 
-    this.mediaRecorder.onstop = (e) => {
-      const a = document.createElement('a');
-      document.body.appendChild(a);
+    this.mediaRecorder.onstop = () => {
+      // const a = document.createElement('a');
+      // document.body.appendChild(a);
 
       const blob = new Blob(this.chunks, { type: 'audio/webm; codecs=opus' });
-      // const blob = new Blob(this.chunks, { type: 'application/octet-stream' });
-      this.chunks = []; const audioURL = window.URL.createObjectURL(blob);
-      a.href = audioURL;
-      a.download = 'test_audio.webm';
-      a.click();
+      this.chunks = [];
+      const audioURL = window.URL.createObjectURL(blob);
+      const stream = {
+        audioURL,
+        name: `${this.state.audioName}.webm`,
+      };
+
+      this.state.streams.push(stream);
+      this.setState({
+        audioName: '',
+      });
     };
 
     this.mediaRecorder.ondataavailable = (e) => {
@@ -113,27 +135,80 @@ class Recorder extends Component {
     draw();
   }
 
-  toggleRecord() {
-    if (this.state.isRecording) {
-      this.mediaRecorder.start();
+  loadVideo(e) {
+    // console.log(e.target.files);
+    const objectURL = window.URL.createObjectURL(e.target.files[0]);
+    // console.log(objectURL);
+
+    this.setState({
+      videoUrl: objectURL,
+      isVideoLoaded: true,
+    });
+  }
+
+  toggleRecord(play = true) {
+    if (!this.state.isRecording && play) {
+      this.setState({
+        countdown: this.state.countdown + 1,
+      });
+      this.recInt = setInterval(() => {
+        if (this.state.countdown == 4) {
+          this.mediaRecorder.start();
+          if (this.state.isVideoLoaded) {
+            this.refs.video.volume = 0;
+            this.refs.video.play();
+          }
+          clearInterval(this.recInt);
+        }
+        this.setState({
+          countdown: this.state.countdown + 1,
+        });
+      }, 1000);
     } else {
+      clearInterval(this.recInt);
       this.mediaRecorder.stop();
+      if (this.state.isVideoLoaded) {
+        this.refs.video.pause();
+      }
     }
 
     this.setState({
       isRecording: !this.state.isRecording,
+      countdown: 0,
     });
   }
 
   render() {
-    const buttonClasses = this.state.isRecording ?
+    const buttonClasses = this.state.isRecording && this.state.countdown >= 4 ?
       'record-button record-button--on' : 'record-button';
 
     return (
       <section ref="main" className={this.props.className}>
-        <video ref="video" src="" />
+        <input
+          type="file"
+          onChange={(e) => { this.loadVideo(e); }}
+          accept="video/*"
+        />
+        <video
+          ref="video"
+          width="640"
+          controls
+          onEnded={() => {
+            this.toggleRecord(false);
+          }}
+          src={this.state.videoUrl}
+        />
         <canvas ref="canvas" className="visualizer" height="60px" />
         <div id="buttons">
+          <input
+            type="text"
+            value={this.state.audioName}
+            onChange={(e) => {
+              this.setState({
+                audioName: e.target.value,
+              });
+            }}
+          />
           <button
             ref="record"
             className={buttonClasses}
@@ -141,9 +216,16 @@ class Recorder extends Component {
               this.toggleRecord();
             }}
           >
-            { !this.state.isRecording ? 'Record' : 'Stop' }
+            { this.countdownSteps[this.state.countdown]}
           </button>
         </div>
+        <ul>
+          {
+            _.map(this.state.streams, ({ audioURL, name }) => (
+              <li><a href={audioURL} download={name}>{name}</a></li>
+              ))
+          }
+        </ul>
       </section>
     );
   }
