@@ -10,7 +10,7 @@ class Recorder extends Component {
       videoUrl: '',
       countdown: 0,
       audioName: '',
-      isSupported: false,
+      // isSupported: false,
       isRecording: false,
       isVideoLoaded: false,
     };
@@ -102,12 +102,12 @@ class Recorder extends Component {
 
       analyser.getByteTimeDomainData(dataArray);
 
-      this.canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+      this.canvasCtx.fillStyle = '#4F4F4F';
       this.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
 
       this.canvasCtx.lineWidth = 2;
-      this.canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+      this.canvasCtx.strokeStyle = '#979797';
 
       this.canvasCtx.beginPath();
 
@@ -191,41 +191,50 @@ class Recorder extends Component {
         />
         <video
           ref="video"
-          width="640"
-          controls
+          className="video"
+          // controls
           onEnded={() => {
             this.toggleRecord(false);
           }}
           src={this.state.videoUrl}
         />
-        <canvas ref="canvas" className="visualizer" height="60px" />
-        <div id="buttons">
-          <input
-            type="text"
-            value={this.state.audioName}
-            onChange={(e) => {
-              this.setState({
-                audioName: e.target.value,
-              });
-            }}
-          />
-          <button
-            ref="record"
-            className={buttonClasses}
-            onClick={() => {
-              this.toggleRecord();
-            }}
-          >
-            { this.countdownSteps[this.state.countdown]}
-          </button>
-        </div>
-        <ul>
-          {
-            _.map(this.state.streams, ({ audioURL, name }) => (
-              <li><a href={audioURL} download={name}>{name}</a></li>
+        <canvas ref="canvas" className="visualizer grid-x grid-margin-x" height="60px" />
+        <div className="buttons grid-x grid-margin-x">
+          <div className="cell small-4">
+            <input
+              type="text"
+              value={this.state.audioName}
+              onChange={(e) => {
+                  this.setState({
+                    audioName: e.target.value,
+                  });
+                }}
+            />
+          </div>
+          <div className="cell small-8">
+            <button
+              ref="record"
+              className={buttonClasses}
+              onClick={() => {
+                  this.toggleRecord();
+                }}
+            >
+              { this.countdownSteps[this.state.countdown]}
+            </button>
+          </div>
+          <ul>
+            {
+              _.map(this.state.streams, ({ audioURL, name }, key) => (
+                <li className="audio_track" key={key}>
+                  <a href={audioURL} download={name}>{name}</a>
+                  <audio controls>
+                    <source src={audioURL} type="audio/ogg" />
+                  </audio>
+                </li>
               ))
-          }
-        </ul>
+            }
+          </ul>
+        </div>
       </section>
     );
   }

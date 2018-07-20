@@ -1,5 +1,28 @@
+$width : 640px;
+$white : #EAFEFF;
+$light-gray : #96A4A4;
+$dark-gray : #151515;
+
+.app {
+  color: $light-gray;
+  background-color: $dark-gray;
+  height: 2000px;
+}
+
 .recorder {
+  margin: 1rem auto !important;
+
   .video {
+    width: $width;
+  }
+
+  .visualizer {
+    width: $width;
+  }
+
+  .buttons {
+    margin-top: 1rem;
+    width: $width;
   }
 
   .record-button {
