@@ -182,22 +182,27 @@ class Recorder extends Component {
     const buttonClasses = this.state.isRecording && this.state.countdown >= 4 ?
       'record-button record-button--on' : 'record-button';
 
+    const videoInput = (this.state.isVideoLoaded) ? (
+      <video
+        ref="video"
+        className="video"
+        // controls
+        onEnded={() => {
+          this.toggleRecord(false);
+        }}
+        src={this.state.videoUrl}
+      />
+    ) : (
+      <input
+        type="file"
+        onChange={(e) => { this.loadVideo(e); }}
+        accept="video/*"
+      />
+    );
+
     return (
       <section ref="main" className={this.props.className}>
-        <input
-          type="file"
-          onChange={(e) => { this.loadVideo(e); }}
-          accept="video/*"
-        />
-        <video
-          ref="video"
-          className="video"
-          // controls
-          onEnded={() => {
-            this.toggleRecord(false);
-          }}
-          src={this.state.videoUrl}
-        />
+        {videoInput}
         <canvas ref="canvas" className="visualizer grid-x grid-margin-x" height="60px" />
         <div className="buttons grid-x grid-margin-x">
           <div className="cell small-4">
