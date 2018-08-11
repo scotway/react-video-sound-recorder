@@ -13,7 +13,12 @@ class Recorder extends Component {
       // isSupported: false,
       isRecording: false,
       isVideoLoaded: false,
+      videoPosition: 0,
+      currentTime: 0,
     };
+
+    this.fillColor = '#274370';
+    this.strokeColor = '#4C6DC4';
 
     this.countdownSteps = [
       'Record',
@@ -49,7 +54,7 @@ class Recorder extends Component {
       navigator.mediaDevices.getUserMedia(constraints).then((stream) => { this.onSuccess(stream); }, onError);
 
       window.onresize = () => {
-        this.refs.canvas.width = this.refs.main.offsetWidth;
+        this.refs.canvas.width = document.getElementById('app').offsetWidth;
       };
 
       window.onresize();
@@ -83,6 +88,16 @@ class Recorder extends Component {
     };
   }
 
+  scrubVideo(e) {
+    const duration = this.refs.video.duration;
+    this.refs.video.currentTime = duration * (e.target.value / 100);
+
+    this.setState({
+      videoPosition: e.target.value,
+      currentTime: parseFloat(duration * (e.target.value / 100)).toFixed(2),
+    });
+  }
+
   visualizeStream(stream) {
     const source = this.audioCtx.createMediaStreamSource(stream);
 
@@ -102,12 +117,12 @@ class Recorder extends Component {
 
       analyser.getByteTimeDomainData(dataArray);
 
-      this.canvasCtx.fillStyle = '#4F4F4F';
+      this.canvasCtx.fillStyle = this.fillColor;
       this.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
 
       this.canvasCtx.lineWidth = 2;
-      this.canvasCtx.strokeStyle = '#979797';
+      this.canvasCtx.strokeStyle = this.strokeColor;
 
       this.canvasCtx.beginPath();
 
@@ -152,18 +167,25 @@ class Recorder extends Component {
         countdown: this.state.countdown + 1,
       });
       this.recInt = setInterval(() => {
-        if (this.state.countdown == 4) {
+        if (this.state.countdown === 4) {
           this.mediaRecorder.start();
           if (this.state.isVideoLoaded) {
             this.refs.video.volume = 0;
             this.refs.video.play();
+
+            this.refs.video.ontimeupdate = () => {
+              this.setState({
+                currentTime: this.refs.video.currentTime,
+                videoPosition: (this.refs.video.currentTime / this.refs.video.duration) * 100,
+              });
+            };
           }
           clearInterval(this.recInt);
         }
         this.setState({
           countdown: this.state.countdown + 1,
         });
-      }, 1000);
+      }, 600);
     } else {
       clearInterval(this.recInt);
       this.mediaRecorder.stop();
@@ -200,19 +222,27 @@ class Recorder extends Component {
       />
     );
 
+    console.log(this.state.videoPosition);
+    const rangeSlider = (this.state.isVideoLoaded) ? (
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value={this.state.videoPosition}
+        onChange={(e) => { this.scrubVideo(e); }}
+        className="visualizer-range"
+      />
+    ) : false;
+
     return (
       <section className={this.props.className}>
         <div className="grid-x grid-margin-x">
-          <div className="cell medium-7">
-            {videoInput}
-          </div>
           <div ref="main" className="cell medium-5">
-            <canvas ref="canvas" className="visualizer" height="60px" />
             <div className="grid-x grid-margin-x">
               <div className="cell medium-7">
                 <input
                   type="text"
-                  value={this.state.audioName}
+                  value={`${this.state.currentTime}_${this.state.audioName}`}
                   onChange={(e) => {
                       this.setState({
                         audioName: e.target.value,
@@ -245,7 +275,13 @@ class Recorder extends Component {
               </ul>
             </div>
           </div>
+          <div className="cell medium-7">
+            {videoInput}
+            <div>Current Time: {this.state.currentTime}</div>
+          </div>
         </div>
+        {rangeSlider}
+        <canvas ref="canvas" className="visualizer" height="60px" />
       </section>
     );
   }

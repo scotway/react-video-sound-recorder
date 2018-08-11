@@ -1,28 +1,68 @@
-$width : 640px;
-$white : #EAFEFF;
-$light-gray : #96A4A4;
-$dark-gray : #151515;
-
 #app {
   color: $light-gray;
   background-color: $dark-gray;
   height: 2000px;
 }
 
+.header {
+  background-color: $light-gray;
+  color: $dark-gray;
+  margin-bottom: 1rem;
+  border-bottom: $gray solid 2px;
+
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
 .recorder {
   //margin: 1rem auto !important;
 
   .video {
-    width: $width;
+    width: 100%;
   }
 
-  .visualizer {
-    margin-bottom: 5px;
+  .visualizer, .visualizer-range {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+  }
+
+  .visualizer-range {
+    -webkit-appearance: none;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.2;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    z-index: 100;
+
+    &:hover {
+        opacity: .4;
+    }
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 60px;
+        background: #4CAF50;
+        cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+        width: 25px;
+        height: 60px;
+        background: #4CAF50;
+        cursor: pointer;
+    }
   }
 
   .buttons {
     margin-top: 1rem;
-    width: $width;
   }
 
   .audio_track {
