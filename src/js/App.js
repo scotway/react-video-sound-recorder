@@ -11,7 +11,7 @@ const App = () => (
         <h1>Audio Recorder</h1>
         <hr />
       </header>
-      <Recorder className="recorder cell medium-10 large-8" />
+      <Recorder className="recorder cell medium-12" />
     </div>
   </div>
 );

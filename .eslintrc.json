@@ -9,6 +9,7 @@
         "navigator": false,
         "MediaRecorder": false,
         "Blob": false,
-        "requestAnimationFrame": false
+        "requestAnimationFrame": false,
+        "webkitAudioContext": false
     }
 }

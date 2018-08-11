@@ -201,44 +201,50 @@ class Recorder extends Component {
     );
 
     return (
-      <section ref="main" className={this.props.className}>
-        {videoInput}
-        <canvas ref="canvas" className="visualizer grid-x grid-margin-x" height="60px" />
-        <div className="buttons grid-x grid-margin-x">
-          <div className="cell small-4">
-            <input
-              type="text"
-              value={this.state.audioName}
-              onChange={(e) => {
-                  this.setState({
-                    audioName: e.target.value,
-                  });
-                }}
-            />
+      <section className={this.props.className}>
+        <div className="grid-x grid-margin-x">
+          <div className="cell medium-7">
+            {videoInput}
           </div>
-          <div className="cell small-8">
-            <button
-              ref="record"
-              className={buttonClasses}
-              onClick={() => {
-                  this.toggleRecord();
-                }}
-            >
-              { this.countdownSteps[this.state.countdown]}
-            </button>
+          <div ref="main" className="cell medium-5">
+            <canvas ref="canvas" className="visualizer" height="60px" />
+            <div className="buttons grid-x grid-margin-x">
+              <div className="cell medium-5">
+                <input
+                  type="text"
+                  value={this.state.audioName}
+                  onChange={(e) => {
+                      this.setState({
+                        audioName: e.target.value,
+                      });
+                    }}
+                />
+              </div>
+              <div className="cell medium-4">
+                <button
+                  ref="record"
+                  className={buttonClasses}
+                  onClick={() => {
+                      this.toggleRecord();
+                    }}
+                >
+                  { this.countdownSteps[this.state.countdown]}
+                </button>
+              </div>
+              <ul>
+                {
+                  _.map(this.state.streams, ({ audioURL, name }, key) => (
+                    <li className="audio_track" key={key}>
+                      <a href={audioURL} download={name}>{name}</a>
+                      <audio controls>
+                        <source src={audioURL} type="audio/ogg" />
+                      </audio>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
           </div>
-          <ul>
-            {
-              _.map(this.state.streams, ({ audioURL, name }, key) => (
-                <li className="audio_track" key={key}>
-                  <a href={audioURL} download={name}>{name}</a>
-                  <audio controls>
-                    <source src={audioURL} type="audio/ogg" />
-                  </audio>
-                </li>
-              ))
-            }
-          </ul>
         </div>
       </section>
     );
