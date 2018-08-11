@@ -208,8 +208,8 @@ class Recorder extends Component {
           </div>
           <div ref="main" className="cell medium-5">
             <canvas ref="canvas" className="visualizer" height="60px" />
-            <div className="buttons grid-x grid-margin-x">
-              <div className="cell medium-5">
+            <div className="grid-x grid-margin-x">
+              <div className="cell medium-7">
                 <input
                   type="text"
                   value={this.state.audioName}
@@ -220,7 +220,7 @@ class Recorder extends Component {
                     }}
                 />
               </div>
-              <div className="cell medium-4">
+              <div className="cell medium-5">
                 <button
                   ref="record"
                   className={buttonClasses}
@@ -231,7 +231,7 @@ class Recorder extends Component {
                   { this.countdownSteps[this.state.countdown]}
                 </button>
               </div>
-              <ul>
+              <ul className="cell medium-12">
                 {
                   _.map(this.state.streams, ({ audioURL, name }, key) => (
                     <li className="audio_track" key={key}>

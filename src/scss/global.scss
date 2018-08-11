@@ -20,7 +20,7 @@ body {
 	min-height: 100%;
 	height: auto;
 
-	font-family: $default-font;
+	font-family: $default-font !important;
 
 	@include breakpoint(medium up) {
 		padding-bottom: 20rem;
@@ -90,7 +90,7 @@ button {
 	padding: 10px 15px;
 	width: 100%;
 	font-size: 1rem;
-	font-family: 'Oswald';
+	font-family: $default-font;
 	font-weight: bold;
 	background-color: $dark-gray;
 	color: $white;

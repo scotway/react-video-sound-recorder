@@ -17,7 +17,7 @@ $dark-gray : #151515;
   }
 
   .visualizer {
-    //width: $width;
+    margin-bottom: 5px;
   }
 
   .buttons {
@@ -25,8 +25,29 @@ $dark-gray : #151515;
     width: $width;
   }
 
+  .audio_track {
+    list-style: none;
+    width:100%;
+
+    a {
+      line-height: 55px;
+      vertical-align: middle;
+      display: inline-block;
+      float: left;
+      margin-right: 1rem;
+      color: $light-gray;
+      width:100%;
+    }
+
+    audio {
+      float: left;
+      width:100%;
+    }
+  }
+
   .record-button {
     background-color: $button;
+    padding: 12px 15px;
 
     &--on {
       background-color: $alert-red;
