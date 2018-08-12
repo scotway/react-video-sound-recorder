@@ -4,14 +4,17 @@
   height: 2000px;
 }
 
+$height: 80px;
+
 .header {
   background-color: $light-gray;
-  color: $dark-gray;
+  background: linear-gradient($dark-gray, $black);
+  color: $light-gray;
   margin-bottom: 1rem;
-  border-bottom: $gray solid 2px;
+  border-bottom: $dark-gray solid 2px;
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.4rem;
     margin: 0;
   }
 }
@@ -22,12 +25,18 @@
   .video {
     width: 100%;
   }
+  
+  .uploader {
+    height: 300px;
+    padding: 150px;
+    border: 3px gray dashed;
+  }
 
   .visualizer, .visualizer-range {
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 60px;
+    height: $height;
     width: 100%;
   }
 
@@ -48,14 +57,14 @@
         -webkit-appearance: none;
         appearance: none;
         width: 25px;
-        height: 60px;
+        height: $height;
         background: #4CAF50;
         cursor: pointer;
     }
 
     &::-moz-range-thumb {
         width: 25px;
-        height: 60px;
+        height: $height;
         background: #4CAF50;
         cursor: pointer;
     }
@@ -83,6 +92,10 @@
       float: left;
       width:100%;
     }
+  }
+
+  .play-button {
+    background-color: $button;
   }
 
   .record-button {

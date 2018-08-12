@@ -13,6 +13,7 @@ class Recorder extends Component {
       // isSupported: false,
       isRecording: false,
       isVideoLoaded: false,
+      isPlaying: false,
       videoPosition: 0,
       currentTime: 0,
     };
@@ -66,9 +67,6 @@ class Recorder extends Component {
     this.visualizeStream(stream);
 
     this.mediaRecorder.onstop = () => {
-      // const a = document.createElement('a');
-      // document.body.appendChild(a);
-
       const blob = new Blob(this.chunks, { type: 'audio/webm; codecs=opus' });
       this.chunks = [];
       const audioURL = window.URL.createObjectURL(blob);
@@ -88,14 +86,29 @@ class Recorder extends Component {
     };
   }
 
-  scrubVideo(e) {
-    const duration = this.refs.video.duration;
-    this.refs.video.currentTime = duration * (e.target.value / 100);
+  removeAudio(index) {
+    _.pullAt(this.state.streams, [index]);
+    this.forceUpdate();
+  }
 
+
+  updateScrubber() {
     this.setState({
-      videoPosition: e.target.value,
-      currentTime: parseFloat(duration * (e.target.value / 100)).toFixed(2),
+      videoPosition: (this.refs.video.currentTime / this.refs.video.duration) * 100,
+      currentTime: this.refs.video.currentTime,
     });
+  }
+
+  scrubVideo(e) {
+    if (!this.state.isPlaying) {
+      const duration = this.refs.video.duration;
+      this.refs.video.currentTime = duration * (e.target.value / 100);
+
+      this.setState({
+        videoPosition: e.target.value,
+        currentTime: parseFloat(duration * (e.target.value / 100)).toFixed(2),
+      });
+    }
   }
 
   visualizeStream(stream) {
@@ -161,6 +174,32 @@ class Recorder extends Component {
     });
   }
 
+  playAll() {
+    const audios = document.getElementsByTagName('audio');
+
+    if (!this.state.isPlaying) {
+      this.refs.video.volume = 0;
+      this.refs.video.ontimeupdate = () => {
+        this.updateScrubber();
+      };
+      this.refs.video.play();
+      _.map(audios, (audio) => {
+        audio.currentTime = (this.refs.video.currentTime / this.refs.video.duration) * 100;
+        audio.play();
+      });
+    } else {
+      this.refs.video.pause();
+      _.map(audios, (audio) => {
+        // audio.currentTime = (this.refs.video.currentTime / this.refs.video.duration) * 100;
+        audio.pause();
+      });
+    }
+
+    this.setState({
+      isPlaying: !this.state.isPlaying,
+    });
+  }
+
   toggleRecord(play = true) {
     if (!this.state.isRecording && play) {
       this.setState({
@@ -171,14 +210,10 @@ class Recorder extends Component {
           this.mediaRecorder.start();
           if (this.state.isVideoLoaded) {
             this.refs.video.volume = 0;
+            this.refs.video.currentTime = 0;
             this.refs.video.play();
 
-            this.refs.video.ontimeupdate = () => {
-              this.setState({
-                currentTime: this.refs.video.currentTime,
-                videoPosition: (this.refs.video.currentTime / this.refs.video.duration) * 100,
-              });
-            };
+            this.refs.video.ontimeupdate = () => { this.updateScrubber(); };
           }
           clearInterval(this.recInt);
         }
@@ -205,24 +240,36 @@ class Recorder extends Component {
       'record-button record-button--on' : 'record-button';
 
     const videoInput = (this.state.isVideoLoaded) ? (
-      <video
-        ref="video"
-        className="video"
-        // controls
-        onEnded={() => {
-          this.toggleRecord(false);
-        }}
-        src={this.state.videoUrl}
-      />
+      <span>
+        <video
+          ref="video"
+          className="video"
+                // controls
+          onEnded={() => {
+                  this.toggleRecord(false);
+                }}
+          src={this.state.videoUrl}
+        />
+        <div>Current Time: {this.state.currentTime}</div>
+        <button
+          className="play-button"
+          onClick={() => {
+                    this.playAll();
+                  }}
+        >
+          { !this.state.isPlaying ? 'Play' : 'Stop' }
+        </button>
+      </span>
     ) : (
       <input
         type="file"
+        className="uploader"
         onChange={(e) => { this.loadVideo(e); }}
         accept="video/*"
       />
     );
 
-    console.log(this.state.videoPosition);
+    // console.log(this.state.videoPosition);
     const rangeSlider = (this.state.isVideoLoaded) ? (
       <input
         type="range"
@@ -242,7 +289,7 @@ class Recorder extends Component {
               <div className="cell medium-7">
                 <input
                   type="text"
-                  value={`${this.state.currentTime}_${this.state.audioName}`}
+                  value={`${this.state.audioName}`}
                   onChange={(e) => {
                       this.setState({
                         audioName: e.target.value,
@@ -255,7 +302,11 @@ class Recorder extends Component {
                   ref="record"
                   className={buttonClasses}
                   onClick={() => {
-                      this.toggleRecord();
+                      if (this.state.audioName === '') {
+                        alert('Please supply a filename');
+                      } else {
+                        this.toggleRecord();
+                      }
                     }}
                 >
                   { this.countdownSteps[this.state.countdown]}
@@ -266,9 +317,18 @@ class Recorder extends Component {
                   _.map(this.state.streams, ({ audioURL, name }, key) => (
                     <li className="audio_track" key={key}>
                       <a href={audioURL} download={name}>{name}</a>
-                      <audio controls>
-                        <source src={audioURL} type="audio/ogg" />
-                      </audio>
+                      <span>
+                        <audio controls>
+                          <source src={audioURL} type="audio/ogg" />
+                        </audio>
+                        <button
+                          className="delete-button"
+                          onClick={() => {
+                          this.removeAudio(key);
+                        }}
+                        > X
+                        </button>
+                      </span>
                     </li>
                   ))
                 }
@@ -277,7 +337,6 @@ class Recorder extends Component {
           </div>
           <div className="cell medium-7">
             {videoInput}
-            <div>Current Time: {this.state.currentTime}</div>
           </div>
         </div>
         {rangeSlider}
